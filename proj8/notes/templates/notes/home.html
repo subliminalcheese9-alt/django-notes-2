@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notes</title>
+    <style>
+	    body { background: #111; }
+	    h1 { color: blue; }
+	    .note { }
+	    .pending { color: red; }
+	    .done { color: green; }
+	</style>
+</head>
+<body>
+    <h1>Notes App</h1>
+    <form method='POST'>
+	    {% csrf_token %}
+		<input placeholder='Enter Note...' type='text' name='text' required>
+		<button type='submit'>Add</button>
+	</form>
+    {% for note in notes %}
+		<div class='note'>
+		    <span>{{ note.text }}</span>
+		    {% if note.done %}
+		        <span class='done'>✓ Done</span>
+		    {% else %}
+			    <span class='pending'>✕ Not Done</span>
+			{% endif %}
+        </div>
+	    
+	<a href='{% url 'delete_note' note.id %}'>Toggle</a>
+	<a href='{% url 'toggle_note' note.id %}'>Delete</a>
+		
+	{% endfor %}
+	   
+</body>
+</html>
